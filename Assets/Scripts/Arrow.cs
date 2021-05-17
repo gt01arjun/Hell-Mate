@@ -25,6 +25,11 @@ public class Arrow : MonoBehaviour
         {
             TrackMovement();
         }
+
+        if (transform.position.y < -50f)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void TrackMovement()
@@ -38,8 +43,22 @@ public class Arrow : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        _hasHit = true;
         _rb.velocity = Vector3.zero;
-        //_rb.isKinematic = true;
+
+        if (collision.transform.root.GetComponent<Boy>() && _hasHit == false)
+        {
+            //Debug.Log(collision.transform.name);
+            FixedJoint _fixedJoint = gameObject.AddComponent<FixedJoint>();
+            _fixedJoint.connectedBody = collision.transform.GetComponent<Rigidbody>();
+            _rb.useGravity = false;
+            Destroy(gameObject.GetComponent<Collider>());
+            GameManager.ArrowsHit++;
+        }
+        else if(_hasHit == false)
+        {
+            _rb.isKinematic = true;
+        }
+
+        _hasHit = true;
     }
 }

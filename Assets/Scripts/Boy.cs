@@ -15,13 +15,13 @@ public class Boy : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && GameManager.GameOver == false)
         {
             // key pressed: save the current time
             _startTime = Time.time;
         }
 
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyUp(KeyCode.Space) && GameManager.GameOver == false)
         {
             // key released: measure the time
             float timePressed = Time.time - _startTime;
