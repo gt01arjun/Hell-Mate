@@ -126,4 +126,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _direction: {x: 10, y: 5}
-  _launchForce: 60
+  _launchForce: 50
