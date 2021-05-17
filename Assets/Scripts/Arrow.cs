@@ -51,7 +51,9 @@ public class Arrow : MonoBehaviour
             FixedJoint _fixedJoint = gameObject.AddComponent<FixedJoint>();
             _fixedJoint.connectedBody = collision.transform.GetComponent<Rigidbody>();
             _rb.useGravity = false;
+            _rb.constraints = RigidbodyConstraints.FreezeRotation;
             Destroy(gameObject.GetComponent<Collider>());
+            GameManager.LastArrowDirection = _direction;
             GameManager.ArrowsHit++;
         }
         else if(_hasHit == false)
