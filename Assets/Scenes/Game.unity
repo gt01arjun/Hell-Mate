@@ -1561,8 +1561,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90789bd70a1d674459409ff3b3747afe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _arrow: {fileID: 4074347628866934287, guid: 50f9e59c3160a1c4faec4af89f5b47b6, type: 3}
+  _arrowPrefab: {fileID: 4074347628866934287, guid: 50f9e59c3160a1c4faec4af89f5b47b6, type: 3}
   _player: {fileID: 1335382310}
+  _leftArrowX: 6
+  _rightArrowX: -6
+  _arrowYMin: -2
+  _arrowYMax: 2
+  _arrowSpawnRate: 0.4
 --- !u!4 &2064638929
 Transform:
   m_ObjectHideFlags: 0

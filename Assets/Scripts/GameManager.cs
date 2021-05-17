@@ -25,6 +25,11 @@ public class GameManager : MonoBehaviour
                 _player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
                 _player.GetComponent<Rigidbody>().velocity = new Vector3(40, _player.GetComponent<Rigidbody>().velocity.y, 0);
             }
+            else if (LastArrowDirection.x < 0)
+            {
+                _player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                _player.GetComponent<Rigidbody>().velocity = new Vector3(-40, _player.GetComponent<Rigidbody>().velocity.y, 0);
+            }
         }
     }
 }

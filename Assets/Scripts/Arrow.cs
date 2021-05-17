@@ -4,19 +4,16 @@ using UnityEngine;
 public class Arrow : MonoBehaviour
 {
     private Rigidbody _rb;
-
     private bool _hasHit;
 
-    [SerializeField]
-    private Vector2 _direction;
+    public Vector2 Direction;
 
-    [SerializeField]
-    private float _launchForce;
+    public float LaunchForce;
 
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
-        _rb.AddForce(_direction * _launchForce);
+        _rb.AddForce(Direction * LaunchForce);
     }
 
     private void Update()
@@ -53,7 +50,7 @@ public class Arrow : MonoBehaviour
             _rb.useGravity = false;
             _rb.constraints = RigidbodyConstraints.FreezeRotation;
             Destroy(gameObject.GetComponent<Collider>());
-            GameManager.LastArrowDirection = _direction;
+            GameManager.LastArrowDirection = Direction;
             GameManager.ArrowsHit++;
         }
         else if(_hasHit == false)
