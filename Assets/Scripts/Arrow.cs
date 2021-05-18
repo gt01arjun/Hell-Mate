@@ -13,14 +13,15 @@ public class Arrow : MonoBehaviour
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
-        _rb.AddForce(Direction * LaunchForce);
+        //_rb.AddForce(Direction * LaunchForce);
+        _rb.velocity = new Vector3(Direction.x, 0, 0);
     }
 
     private void Update()
     {
         if (_hasHit == false)
         {
-            TrackMovement();
+            //TrackMovement();
         }
 
         if (transform.position.y < -50f)
@@ -53,7 +54,7 @@ public class Arrow : MonoBehaviour
             GameManager.LastArrowDirection = Direction;
             GameManager.ArrowsHit++;
         }
-        else if(_hasHit == false)
+        else if (_hasHit == false)
         {
             _rb.isKinematic = true;
         }
