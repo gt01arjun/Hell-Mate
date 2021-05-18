@@ -9,8 +9,11 @@ public class Boy : MonoBehaviour
     private float _playerMaxVelocity;
 
     private bool _jump = false;
+    private bool _powerJump = false;
 
     private Rigidbody[] _rigidbodies;
+
+    public static bool CanPowerJump;
 
     private void Start()
     {
@@ -19,22 +22,29 @@ public class Boy : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && GameManager.GameOver == false)
+        if (Input.GetKeyDown(KeyCode.Space) && GameManager.GameOver == false && CanPowerJump)
         {
-            //Vector3 newVelocity = new Vector3(0, _thrust, 0);
-            //newVelocity.y = Mathf.Clamp(newVelocity.y, _playerMinVelocity, _playerMaxVelocity);
-            //_rb.velocity = newVelocity;
-
-            //_rb.AddRelativeForce(Vector3.up * _thrust, ForceMode.VelocityChange);
-            //_rb.AddForceAtPosition(Vector3.up * _thrust, transform.position, ForceMode.Impulse);
-
+            _powerJump = true;
+            CanPowerJump = false;
+            BoyHead.DestroyLog = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.Space) && GameManager.GameOver == false)
+        {
             _jump = true;
         }
     }
 
     private void FixedUpdate()
     {
-        if (_jump == true)
+        if (_powerJump == true)
+        {
+            foreach (Rigidbody r in _rigidbodies)
+            {
+                r.AddForce(Vector3.up * _jumpForce * 3, ForceMode.Impulse);
+            }
+            _powerJump = false;
+        }
+        else if (_jump == true)
         {
             foreach (Rigidbody r in _rigidbodies)
             {
