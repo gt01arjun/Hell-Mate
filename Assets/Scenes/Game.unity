@@ -1529,9 +1529,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c31560fe9e24a4b428568e0b3e75f93c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _thrust: 60
-  _thrustMultiplier: 2
+  _thrust: 200
   _rb: {fileID: 1335382316}
+  _playerMinVelocity: -10
+  _playerMaxVelocity: 45
 --- !u!1 &2064638927
 GameObject:
   m_ObjectHideFlags: 0
@@ -1566,8 +1567,8 @@ MonoBehaviour:
   _leftArrowX: 6
   _rightArrowX: -6
   _arrowYMin: -2
-  _arrowYMax: 2
-  _arrowSpawnRate: 0.4
+  _arrowYMax: 3
+  _arrowSpawnRate: 1.5
 --- !u!4 &2064638929
 Transform:
   m_ObjectHideFlags: 0
