@@ -4,7 +4,7 @@ public class GameManager : MonoBehaviour
 {
     public static int ArrowsHit;
     public static bool GameOver;
-    public static Vector2 LastArrowDirection;
+    public static float LastArrowDirection;
 
     [SerializeField]
     private GameObject _player;
@@ -20,12 +20,12 @@ public class GameManager : MonoBehaviour
         if (ArrowsHit >= 3)
         {
             GameOver = true;
-            if (LastArrowDirection.x >= 0)
+            if (LastArrowDirection >= 0)
             {
                 _player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
                 _player.GetComponent<Rigidbody>().velocity = new Vector3(40, _player.GetComponent<Rigidbody>().velocity.y, 0);
             }
-            else if (LastArrowDirection.x < 0)
+            else if (LastArrowDirection < 0)
             {
                 _player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
                 _player.GetComponent<Rigidbody>().velocity = new Vector3(-40, _player.GetComponent<Rigidbody>().velocity.y, 0);

@@ -32,7 +32,7 @@ public class ArrowGenerator : MonoBehaviour
         if (r == 0)
         {
             GameObject arrowInstance = Instantiate(_arrowPrefab, new Vector3(_leftArrowX, _player.transform.position.y + Random.Range(_arrowYMin, _arrowYMax), _arrowPrefab.transform.position.z), _arrowPrefab.transform.rotation);
-            arrowInstance.GetComponent<Arrow>().Direction.x = -arrowInstance.GetComponent<Arrow>().Direction.x;
+            arrowInstance.GetComponent<Arrow>().ArrowVelocityX = -arrowInstance.GetComponent<Arrow>().ArrowVelocityX;
         }
         else if (r == 1)
         {

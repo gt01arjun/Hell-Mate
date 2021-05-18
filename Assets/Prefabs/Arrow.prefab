@@ -125,5 +125,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ef44400e0ce4b5468133499e133cb66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Direction: {x: 10, y: 3}
-  LaunchForce: 40
+  ArrowVelocityX: 7

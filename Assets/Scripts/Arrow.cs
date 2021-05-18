@@ -4,39 +4,23 @@ using UnityEngine;
 public class Arrow : MonoBehaviour
 {
     private Rigidbody _rb;
+
     private bool _hasHit;
 
-    public Vector2 Direction;
-
-    public float LaunchForce;
+    public float ArrowVelocityX;
 
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
-        //_rb.AddForce(Direction * LaunchForce);
-        _rb.velocity = new Vector3(Direction.x, 0, 0);
+        _rb.velocity = new Vector3(ArrowVelocityX, 0, 0);
     }
 
     private void Update()
     {
-        if (_hasHit == false)
-        {
-            //TrackMovement();
-        }
-
-        if (transform.position.y < -50f)
+        if (transform.position.x > 10f || transform.position.x < -10f)
         {
             Destroy(gameObject);
         }
-    }
-
-    private void TrackMovement()
-    {
-        Vector2 direction = _rb.velocity;
-
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -51,7 +35,7 @@ public class Arrow : MonoBehaviour
             _rb.useGravity = false;
             _rb.constraints = RigidbodyConstraints.FreezeRotation;
             Destroy(gameObject.GetComponent<Collider>());
-            GameManager.LastArrowDirection = Direction;
+            GameManager.LastArrowDirection = ArrowVelocityX;
             GameManager.ArrowsHit++;
         }
         else if (_hasHit == false)
