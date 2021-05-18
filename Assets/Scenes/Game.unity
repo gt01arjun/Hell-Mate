@@ -621,6 +621,7 @@ MonoBehaviour:
   _arrowYMin: -2
   _arrowYMax: 10
   _arrowSpawnRate: 0.75
+  _arrowSpawnDistance: 4
 --- !u!4 &2064638929
 Transform:
   m_ObjectHideFlags: 0

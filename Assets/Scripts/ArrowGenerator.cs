@@ -20,6 +20,12 @@ public class ArrowGenerator : MonoBehaviour
     [SerializeField]
     private float _arrowSpawnRate;
 
+    [SerializeField]
+    private int _arrowSpawnDistance;
+
+    private int lastArrowPosition;
+    private int newArrowPosition;
+
     private void Start()
     {
         InvokeRepeating("SpawnArrow", 1f, _arrowSpawnRate);
@@ -28,15 +34,23 @@ public class ArrowGenerator : MonoBehaviour
     private void SpawnArrow()
     {
         int r = Random.Range(0, 2);
+        newArrowPosition = Random.Range(_arrowYMin, _arrowYMax);
+
+        while (Mathf.Abs(newArrowPosition - lastArrowPosition) < _arrowSpawnDistance)
+        {
+            newArrowPosition = Random.Range(_arrowYMin, _arrowYMax);
+        }
 
         if (r == 0)
         {
-            GameObject arrowInstance = Instantiate(_arrowPrefab, new Vector3(_leftArrowX, _player.transform.position.y + Random.Range(_arrowYMin, _arrowYMax), _arrowPrefab.transform.position.z), _arrowPrefab.transform.rotation);
+            GameObject arrowInstance = Instantiate(_arrowPrefab, new Vector3(_leftArrowX, _player.transform.position.y + newArrowPosition, _arrowPrefab.transform.position.z), _arrowPrefab.transform.rotation);
             arrowInstance.GetComponent<Arrow>().ArrowVelocityX = -arrowInstance.GetComponent<Arrow>().ArrowVelocityX;
         }
         else if (r == 1)
         {
-            Instantiate(_arrowPrefab, new Vector3(_rightArrowX, _player.transform.position.y + Random.Range(_arrowYMin, _arrowYMax), _arrowPrefab.transform.position.z), _arrowPrefab.transform.rotation);
+            Instantiate(_arrowPrefab, new Vector3(_rightArrowX, _player.transform.position.y + newArrowPosition, _arrowPrefab.transform.position.z), _arrowPrefab.transform.rotation);
         }
+
+        lastArrowPosition = newArrowPosition;
     }
 }
