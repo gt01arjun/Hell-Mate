@@ -4,19 +4,16 @@ using UnityEngine;
 public class Arrow : MonoBehaviour
 {
     private Rigidbody _rb;
-
     private bool _hasHit;
 
-    [SerializeField]
-    private Vector2 _direction;
+    public Vector2 Direction;
 
-    [SerializeField]
-    private float _launchForce;
+    public float LaunchForce;
 
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
-        _rb.AddForce(_direction * _launchForce);
+        _rb.AddForce(Direction * LaunchForce);
     }
 
     private void Update()
@@ -24,6 +21,11 @@ public class Arrow : MonoBehaviour
         if (_hasHit == false)
         {
             TrackMovement();
+        }
+
+        if (transform.position.y < -50f)
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -38,8 +40,24 @@ public class Arrow : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        _hasHit = true;
         _rb.velocity = Vector3.zero;
-        //_rb.isKinematic = true;
+
+        if (collision.transform.root.GetComponent<Boy>() && _hasHit == false)
+        {
+            //Debug.Log(collision.transform.name);
+            FixedJoint _fixedJoint = gameObject.AddComponent<FixedJoint>();
+            _fixedJoint.connectedBody = collision.transform.GetComponent<Rigidbody>();
+            _rb.useGravity = false;
+            _rb.constraints = RigidbodyConstraints.FreezeRotation;
+            Destroy(gameObject.GetComponent<Collider>());
+            GameManager.LastArrowDirection = Direction;
+            GameManager.ArrowsHit++;
+        }
+        else if(_hasHit == false)
+        {
+            _rb.isKinematic = true;
+        }
+
+        _hasHit = true;
     }
 }

@@ -16,11 +16,14 @@ public class CameraFollow : MonoBehaviour
 
     private void LateUpdate()
     {
-        // update position
-        Vector3 targetPosition = Target.position + Offset;
-        camTransform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, SmoothTime);
+        if (GameManager.GameOver == false)
+        {
+            // update position
+            Vector3 targetPosition = Target.position + Offset;
+            camTransform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, SmoothTime);
 
-        // update rotation
-        //transform.LookAt(Target);
+            // update rotation
+            //transform.LookAt(Target);
+        }
     }
 }
