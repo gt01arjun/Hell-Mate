@@ -8,16 +8,26 @@ public class Boy : MonoBehaviour
     [SerializeField]
     private float _playerMaxVelocity;
 
+    [SerializeField]
+    private AudioClip[] _audioClips;
+
+    [SerializeField]
+    private AudioClip _powerJumpSoundClip;
+
     private bool _jump = false;
     private bool _powerJump = false;
 
     private Rigidbody[] _rigidbodies;
+
+    private AudioSource _audioSource;
 
     public static bool CanPowerJump;
 
     private void Start()
     {
         _rigidbodies = GetComponentsInChildren<Rigidbody>();
+
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -27,10 +37,14 @@ public class Boy : MonoBehaviour
             _powerJump = true;
             CanPowerJump = false;
             BoyHead.DestroyLog = true;
+            _audioSource.PlayOneShot(_powerJumpSoundClip);
         }
-        else if (Input.GetKeyDown(KeyCode.Space) && GameManager.GameOver == false)
+        else if (Input.GetKeyDown(KeyCode.Space) && GameManager.GameOver == false && GameManager.GameStarted == true)
         {
             _jump = true;
+
+            int s = Random.Range(0, _audioClips.Length);
+            _audioSource.PlayOneShot(_audioClips[s]);
         }
     }
 

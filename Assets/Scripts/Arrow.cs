@@ -8,6 +8,8 @@ public class Arrow : MonoBehaviour
 
     public float ArrowVelocityX;
 
+    public AudioSource _audioSource;
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -29,6 +31,7 @@ public class Arrow : MonoBehaviour
         if (collision.transform.root.GetComponent<Boy>() && _hasHit == false)
         {
             //Debug.Log(collision.transform.name);
+            _audioSource.Play();
             FixedJoint _fixedJoint = gameObject.AddComponent<FixedJoint>();
             _fixedJoint.connectedBody = collision.transform.GetComponent<Rigidbody>();
             _rb.useGravity = false;

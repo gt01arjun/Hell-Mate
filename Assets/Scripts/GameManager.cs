@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public static int ArrowsHit;
     public static bool GameOver;
+    public static bool GameStarted;
     public static float LastArrowDirection;
 
     public static UnityEvent GameOverEvent = new UnityEvent();
@@ -30,10 +31,15 @@ public class GameManager : MonoBehaviour
     private TMP_Text _highScoreText;
     [SerializeField]
     private GameObject _mainCamera;
+    [SerializeField]
+    private AudioClip _deathSoundClip;
+    [SerializeField]
+    private AudioClip _powerJumpSoundClip;
 
     private Rigidbody[] _playerRigidbodies;
 
-    private bool _gameStarted;
+
+    private AudioSource _audioSource;
 
     private int _currentScore;
     private int _highestScore;
@@ -43,9 +49,11 @@ public class GameManager : MonoBehaviour
         GameOverEvent.AddListener(GameEnd);
         ArrowsHit = 0;
         GameOver = false;
-        _gameStarted = false;
+        GameStarted = false;
         _currentScore = 0;
         _highestScore = 0;
+
+        _audioSource = GetComponent<AudioSource>();
 
         if (PlayerPrefs.HasKey("SCORE"))
         {
@@ -68,13 +76,13 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && _gameStarted == false)
+        if (Input.GetKeyDown(KeyCode.Space) && GameStarted == false)
         {
-            _gameStarted = true;
+            GameStarted = true;
 
             foreach (Rigidbody r in _playerRigidbodies)
             {
-                r.AddForce(Vector3.up * 40, ForceMode.Impulse);
+                r.AddForce(Vector3.up * 70, ForceMode.Impulse);
             }
 
             foreach (Rigidbody r in _playerRigidbodies)
@@ -87,6 +95,8 @@ public class GameManager : MonoBehaviour
             DOTween.To(x => _mainCamera.GetComponent<CameraFollow>().Offset.y = x, 0, 4, 1f);
 
             _currentScoreText.gameObject.SetActive(true);
+
+            _audioSource.PlayOneShot(_powerJumpSoundClip);
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -96,7 +106,7 @@ public class GameManager : MonoBehaviour
             _gameplayPanel.SetActive(false);
         }
 
-        if (_gameStarted && GameOver == false)
+        if (GameStarted && GameOver == false)
         {
             _currentScore = (int)_player.transform.position.y;
             if (_currentScore < 0)
@@ -136,6 +146,8 @@ public class GameManager : MonoBehaviour
         }
         _gameOverPanel.SetActive(true);
         _arrowGenerator.SetActive(false);
+
+        _audioSource.PlayOneShot(_deathSoundClip);
 
         PlayerPrefs.SetInt("SCORE", _highestScore);
         PlayerPrefs.Save();
