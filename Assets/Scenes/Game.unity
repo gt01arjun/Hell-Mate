@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.4514237, g: 0.5006674, b: 0.5709773, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2585,8 +2585,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _arrowPrefab: {fileID: 4074347628866934287, guid: 50f9e59c3160a1c4faec4af89f5b47b6, type: 3}
   _player: {fileID: 1082271958487525818}
-  _leftArrowX: 9
-  _rightArrowX: -9
+  _leftArrowX: 14
+  _rightArrowX: -2
   _arrowYMin: -4
   _arrowYMax: 30
   _arrowSpawnRate: 0.5

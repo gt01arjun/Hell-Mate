@@ -17,7 +17,7 @@ public class Arrow : MonoBehaviour
 
     private void Update()
     {
-        if (transform.position.x > 10f || transform.position.x < -10f)
+        if (transform.position.x > 16f || transform.position.x < -5f)
         {
             Destroy(gameObject);
         }
