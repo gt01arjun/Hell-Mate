@@ -8,7 +8,9 @@ public class Arrow : MonoBehaviour
 
     public float ArrowVelocityX;
 
-    public AudioSource _audioSource;
+    public AudioSource AudioSource;
+
+    public GameObject BloodEffect;
 
     private void Start()
     {
@@ -31,15 +33,17 @@ public class Arrow : MonoBehaviour
         if (collision.transform.root.GetComponent<Boy>() && _hasHit == false)
         {
             //Debug.Log(collision.transform.name);
-            _audioSource.Play();
+            AudioSource.Play();
             FixedJoint _fixedJoint = gameObject.AddComponent<FixedJoint>();
             _fixedJoint.connectedBody = collision.transform.GetComponent<Rigidbody>();
             _rb.useGravity = false;
             _rb.constraints = RigidbodyConstraints.FreezeRotation;
             Destroy(gameObject.GetComponent<Collider>());
+            GameObject _bloodEffect = Instantiate(BloodEffect, collision.contacts[0].point, Quaternion.identity);
+            Destroy(_bloodEffect, 3f);
             GameManager.LastArrowDirection = ArrowVelocityX;
             GameManager.ArrowsHit++;
-            if(GameManager.ArrowsHit >= 3)
+            if (GameManager.ArrowsHit >= 3)
             {
                 GameManager.GameOverEvent.Invoke();
             }
