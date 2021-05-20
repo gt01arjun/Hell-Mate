@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject _arrowGenerator;
     [SerializeField]
+    private GameObject _logGenerator;
+    [SerializeField]
     private Rigidbody _mainMenuHangerRigidbody;
     [SerializeField]
     private GameObject _gameplayPanel;
@@ -91,6 +93,7 @@ public class GameManager : MonoBehaviour
             }
 
             _arrowGenerator.SetActive(true);
+            _logGenerator.SetActive(true);
 
             DOTween.To(x => _mainCamera.GetComponent<CameraFollow>().Offset.y = x, 0, 4, 1f);
 
@@ -146,6 +149,7 @@ public class GameManager : MonoBehaviour
         }
         _gameOverPanel.SetActive(true);
         _arrowGenerator.SetActive(false);
+        _logGenerator.SetActive(false);
 
         _audioSource.PlayOneShot(_deathSoundClip);
 

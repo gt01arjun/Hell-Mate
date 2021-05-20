@@ -22,6 +22,6 @@ public class LogGenerator : MonoBehaviour
 
     private void SpawnLog()
     {
-        Instantiate(_logPrefab, new Vector3(0, _player.transform.position.y + Random.Range(_logYMin, _logYMax), 0), _logPrefab.transform.rotation);
+        Instantiate(_logPrefab, new Vector3(_logPrefab.transform.position.x, _player.transform.position.y + Random.Range(_logYMin, _logYMax), 0), _logPrefab.transform.rotation);
     }
 }

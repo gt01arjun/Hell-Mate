@@ -263,6 +263,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 1082271958487525818}
   _arrowGenerator: {fileID: 2064638927}
+  _logGenerator: {fileID: 1944718089}
   _mainMenuHangerRigidbody: {fileID: 1187180750}
   _gameplayPanel: {fileID: 2103987349}
   _pausePanel: {fileID: 836671490}
@@ -3262,10 +3263,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76663274f118597408320a45e7c6acc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _logPrefab: {fileID: 7652309900334993604, guid: 6d6267e1f82b14441abf25a4fe4c941b, type: 3}
+  _logPrefab: {fileID: 1154102306105759022, guid: 9b4d96b151bd604448ecd4ca322434fa, type: 3}
   _player: {fileID: 1082271958487525818}
-  _logSpawnRate: 5
-  _logYMin: 20
+  _logSpawnRate: 7
+  _logYMin: 30
   _logYMax: 40
 --- !u!4 &1944718091
 Transform:
