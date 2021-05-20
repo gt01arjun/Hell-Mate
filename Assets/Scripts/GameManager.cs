@@ -3,6 +3,7 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using TMPro;
 using DG.Tweening;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -24,8 +25,6 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject _gameplayPanel;
     [SerializeField]
-    private GameObject _pausePanel;
-    [SerializeField]
     private GameObject _gameOverPanel;
     [SerializeField]
     private TMP_Text _currentScoreText;
@@ -37,6 +36,10 @@ public class GameManager : MonoBehaviour
     private AudioClip _deathSoundClip;
     [SerializeField]
     private AudioClip _powerJumpSoundClip;
+    [SerializeField]
+    private GameObject _gameLogo;
+    [SerializeField]
+    private GameObject _startText;
 
     private Rigidbody[] _playerRigidbodies;
 
@@ -93,20 +96,17 @@ public class GameManager : MonoBehaviour
             }
 
             _arrowGenerator.SetActive(true);
-            _logGenerator.SetActive(true);
 
             DOTween.To(x => _mainCamera.GetComponent<CameraFollow>().Offset.y = x, 0, 4, 1f);
 
             _currentScoreText.gameObject.SetActive(true);
+            _highScoreText.gameObject.SetActive(true);
 
             _audioSource.PlayOneShot(_powerJumpSoundClip);
-        }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Time.timeScale = 0;
-            _pausePanel.SetActive(true);
-            _gameplayPanel.SetActive(false);
+            _startText.SetActive(false);
+
+            StartCoroutine("DisableGameLogo");
         }
 
         if (GameStarted && GameOver == false)
@@ -126,12 +126,23 @@ public class GameManager : MonoBehaviour
             _highScoreText.text = $"HIGH SCORE: {_highestScore}";
         }
 
+        if (_currentScore > 70 && _logGenerator.activeSelf == false)
+        {
+            _logGenerator.SetActive(true);
+        }
+
 
         //PlayerPrefs Tester
         if (Input.GetKeyDown(KeyCode.D))
         {
             PlayerPrefs.DeleteAll();
         }
+    }
+
+    private IEnumerator DisableGameLogo()
+    {
+        yield return new WaitForSeconds(2f);
+        _gameLogo.SetActive(false);
     }
 
     private void GameEnd()
@@ -148,20 +159,11 @@ public class GameManager : MonoBehaviour
             _player.GetComponent<Rigidbody>().velocity = new Vector3(-80, _player.GetComponent<Rigidbody>().velocity.y, 0);
         }
         _gameOverPanel.SetActive(true);
-        _arrowGenerator.SetActive(false);
-        _logGenerator.SetActive(false);
 
         _audioSource.PlayOneShot(_deathSoundClip);
 
         PlayerPrefs.SetInt("SCORE", _highestScore);
         PlayerPrefs.Save();
-    }
-
-    public void OnResume()
-    {
-        _pausePanel.SetActive(false);
-        _gameplayPanel.SetActive(true);
-        Time.timeScale = 1;
     }
 
     public void OnMainMenu()

@@ -24,4 +24,12 @@ public class LogGenerator : MonoBehaviour
     {
         Instantiate(_logPrefab, new Vector3(_logPrefab.transform.position.x, _player.transform.position.y + Random.Range(_logYMin, _logYMax), 0), _logPrefab.transform.rotation);
     }
+
+    private void Update()
+    {
+        if (GameManager.GameOver == true)
+        {
+            CancelInvoke();
+        }
+    }
 }

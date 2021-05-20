@@ -54,4 +54,12 @@ public class ArrowGenerator : MonoBehaviour
 
         lastArrowPosition = newArrowPosition;
     }
+
+    private void Update()
+    {
+        if(GameManager.GameOver == true)
+        {
+            CancelInvoke();
+        }
+    }
 }

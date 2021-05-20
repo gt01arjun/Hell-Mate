@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 793985516894369019}
   - component: {fileID: 8120849700277798011}
   - component: {fileID: 8120849700277798012}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Log
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,6 +190,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpeedBoost
       objectReference: {fileID: 0}
+    - target: {fileID: 2046014414599566795, guid: fd515ade13236491ab6c09967087beb7, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4650791299901118143, guid: fd515ade13236491ab6c09967087beb7, type: 3}
       propertyPath: m_Size.x
       value: 1.751255
@@ -257,6 +261,14 @@ PrefabInstance:
     - target: {fileID: 6421661978571821727, guid: fd515ade13236491ab6c09967087beb7, type: 3}
       propertyPath: m_LocalPosition.z
       value: -1.2218
+      objectReference: {fileID: 0}
+    - target: {fileID: 8017826063804604556, guid: fd515ade13236491ab6c09967087beb7, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8017826064848968483, guid: fd515ade13236491ab6c09967087beb7, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd515ade13236491ab6c09967087beb7, type: 3}
