@@ -85,6 +85,8 @@ public class GameManager : MonoBehaviour
             _arrowGenerator.SetActive(true);
 
             DOTween.To(x => _mainCamera.GetComponent<CameraFollow>().Offset.y = x, 0, 4, 1f);
+
+            _currentScoreText.gameObject.SetActive(true);
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
