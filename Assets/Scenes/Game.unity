@@ -1790,7 +1790,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b07b8e150d166e458570dfc91b9cdea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _easeType: 30
+  _easeType: 29
   _duration: 1
   _moveAmount: 3
 --- !u!1 &1188304047
