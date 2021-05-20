@@ -54,4 +54,10 @@ public class Boy : MonoBehaviour
             _jump = false;
         }
     }
+
+    void OnBecameInvisible()
+    {
+        Debug.Log("Called");
+        //GameManager.GameOverEvent.Invoke();
+    }
 }

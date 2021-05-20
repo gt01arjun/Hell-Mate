@@ -37,6 +37,10 @@ public class Arrow : MonoBehaviour
             Destroy(gameObject.GetComponent<Collider>());
             GameManager.LastArrowDirection = ArrowVelocityX;
             GameManager.ArrowsHit++;
+            if(GameManager.ArrowsHit >= 3)
+            {
+                GameManager.GameOverEvent.Invoke();
+            }
         }
         else if (_hasHit == false)
         {
