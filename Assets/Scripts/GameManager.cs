@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,13 +18,22 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Rigidbody _mainMenuHangerRigidbody;
     [SerializeField]
+    private GameObject _gameplayPanel;
+    [SerializeField]
     private GameObject _pausePanel;
     [SerializeField]
     private GameObject _gameOverPanel;
+    [SerializeField]
+    private TMP_Text _currentScoreText;
+    [SerializeField]
+    private TMP_Text _highScoreText;
+
+    private Rigidbody[] _playerRigidbodies;
 
     private bool _gameStarted;
 
-    private Rigidbody[] _playerRigidbodies;
+    private int _currentScore;
+    private int _highestScore;
 
     private void OnEnable()
     {
@@ -31,6 +41,18 @@ public class GameManager : MonoBehaviour
         ArrowsHit = 0;
         GameOver = false;
         _gameStarted = false;
+        _currentScore = 0;
+        _highestScore = 0;
+
+        if (PlayerPrefs.HasKey("SCORE"))
+        {
+            _highestScore = PlayerPrefs.GetInt("SCORE");
+            _highScoreText.text = $"HIGH SCORE: {_highestScore}";
+        }
+        else
+        {
+            PlayerPrefs.SetInt("SCORE", _highestScore);
+        }
 
         _playerRigidbodies = _player.transform.root.GetComponentsInChildren<Rigidbody>();
 
@@ -64,6 +86,31 @@ public class GameManager : MonoBehaviour
         {
             Time.timeScale = 0;
             _pausePanel.SetActive(true);
+            _gameplayPanel.SetActive(false);
+        }
+
+        if (_gameStarted && GameOver == false)
+        {
+            _currentScore = (int)_player.transform.position.y;
+            if (_currentScore < 0)
+            {
+                _currentScore = 0;
+            }
+
+            if (_currentScore >= _highestScore)
+            {
+                _highestScore = _currentScore;
+            }
+
+            _currentScoreText.text = $"CURRENT SCORE: {_currentScore}";
+            _highScoreText.text = $"HIGH SCORE: {_highestScore}";
+        }
+
+
+        //PlayerPrefs Tester
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            PlayerPrefs.DeleteAll();
         }
     }
 
@@ -82,11 +129,15 @@ public class GameManager : MonoBehaviour
         }
         _gameOverPanel.SetActive(true);
         _arrowGenerator.SetActive(false);
+
+        PlayerPrefs.SetInt("SCORE", _highestScore);
+        PlayerPrefs.Save();
     }
 
     public void OnResume()
     {
         _pausePanel.SetActive(false);
+        _gameplayPanel.SetActive(true);
         Time.timeScale = 1;
     }
 
