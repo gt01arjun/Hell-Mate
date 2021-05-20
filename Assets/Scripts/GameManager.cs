@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using TMPro;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
@@ -27,6 +28,8 @@ public class GameManager : MonoBehaviour
     private TMP_Text _currentScoreText;
     [SerializeField]
     private TMP_Text _highScoreText;
+    [SerializeField]
+    private GameObject _mainCamera;
 
     private Rigidbody[] _playerRigidbodies;
 
@@ -80,6 +83,8 @@ public class GameManager : MonoBehaviour
             }
 
             _arrowGenerator.SetActive(true);
+
+            DOTween.To(x => _mainCamera.GetComponent<CameraFollow>().Offset.y = x, 0, 4, 1f);
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))

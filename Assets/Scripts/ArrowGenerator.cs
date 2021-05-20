@@ -43,12 +43,13 @@ public class ArrowGenerator : MonoBehaviour
 
         if (r == 0)
         {
-            GameObject arrowInstance = Instantiate(_arrowPrefab, new Vector3(_leftArrowX, _player.transform.position.y + newArrowPosition, _arrowPrefab.transform.position.z), _arrowPrefab.transform.rotation);
+            GameObject arrowInstance = Instantiate(_arrowPrefab, new Vector3(_leftArrowX, _player.transform.position.y + newArrowPosition, _arrowPrefab.transform.position.z), Quaternion.identity);
             arrowInstance.GetComponent<Arrow>().ArrowVelocityX = -arrowInstance.GetComponent<Arrow>().ArrowVelocityX;
+            arrowInstance.transform.Rotate(0, 0, 180);
         }
         else if (r == 1)
         {
-            Instantiate(_arrowPrefab, new Vector3(_rightArrowX, _player.transform.position.y + newArrowPosition, _arrowPrefab.transform.position.z), _arrowPrefab.transform.rotation);
+            GameObject arrowInstance = Instantiate(_arrowPrefab, new Vector3(_rightArrowX, _player.transform.position.y + newArrowPosition, _arrowPrefab.transform.position.z), Quaternion.identity);
         }
 
         lastArrowPosition = newArrowPosition;
