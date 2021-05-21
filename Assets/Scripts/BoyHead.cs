@@ -6,14 +6,11 @@ public class BoyHead : MonoBehaviour
 
     private GameObject _log;
 
-    private void OnCollisionEnter(Collision collision)
+    private AudioSource _audioSource;
+
+    private void Start()
     {
-        if (collision.gameObject.GetComponent<MeshDestroy>() && DestroyLog == true)
-        {
-            //Debug.Log(collision.gameObject.name);
-            //collision.gameObject.GetComponent<MeshDestroy>().DestroyMesh();
-            //DestroyLog = false;
-        }
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -21,6 +18,8 @@ public class BoyHead : MonoBehaviour
         if (DestroyLog == true)
         {
             _log.GetComponent<MeshDestroy>().DestroyMesh();
+            _audioSource.Stop();
+            _audioSource.Play();
             DestroyLog = false;
         }
     }
