@@ -32,7 +32,7 @@ public class Boy : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && GameManager.GameOver == false && CanPowerJump)
+        if (Input.GetKeyDown(KeyCode.Space) && GameManager.GameOver == false && GameManager.GameStarted == true && CanPowerJump)
         {
             _powerJump = true;
             CanPowerJump = false;

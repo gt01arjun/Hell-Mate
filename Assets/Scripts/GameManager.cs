@@ -95,15 +95,13 @@ public class GameManager : MonoBehaviour
 
             foreach (Rigidbody r in _playerRigidbodies)
             {
-                r.AddForce(Vector3.up * 70, ForceMode.Impulse);
+                r.AddForce(Vector3.up * 85, ForceMode.Impulse);
             }
 
             foreach (Rigidbody r in _playerRigidbodies)
             {
                 Destroy(r.gameObject.GetComponent<SpringJoint>());
             }
-
-            _arrowGenerator.SetActive(true);
 
             DOTween.To(x => _mainCamera.GetComponent<CameraFollow>().Offset.y = x, 0, 4, 1f);
 
@@ -159,6 +157,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         _gameLogo.SetActive(false);
+        _arrowGenerator.SetActive(true);
     }
 
     private void GameEnd()
