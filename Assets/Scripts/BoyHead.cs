@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class BoyHead : MonoBehaviour
@@ -7,6 +8,9 @@ public class BoyHead : MonoBehaviour
     private GameObject _log;
 
     private AudioSource _audioSource;
+
+    [SerializeField]
+    private GameObject _arrowGenerator;
 
     private void Start()
     {
@@ -20,7 +24,11 @@ public class BoyHead : MonoBehaviour
             _log.GetComponent<MeshDestroy>().DestroyMesh();
             _audioSource.Stop();
             _audioSource.Play();
+            _arrowGenerator.GetComponent<ArrowGenerator>().StopSpawn();
+            _arrowGenerator.SetActive(false);
             DestroyLog = false;
+
+            StartCoroutine("EnableSpawn");
         }
     }
 
@@ -40,5 +48,11 @@ public class BoyHead : MonoBehaviour
             Boy.CanPowerJump = false;
             _log = null;
         }
+    }
+
+    private IEnumerator EnableSpawn()
+    {
+        yield return new WaitForSeconds(1.5f);
+        _arrowGenerator.SetActive(true);
     }
 }

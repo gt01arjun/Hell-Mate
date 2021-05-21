@@ -26,7 +26,7 @@ public class ArrowGenerator : MonoBehaviour
     private int lastArrowPosition;
     private int newArrowPosition;
 
-    private void Start()
+    private void OnEnable()
     {
         InvokeRepeating("SpawnArrow", 1f, _arrowSpawnRate);
     }
@@ -61,5 +61,10 @@ public class ArrowGenerator : MonoBehaviour
         {
             CancelInvoke();
         }
+    }
+
+    public void StopSpawn()
+    {
+        CancelInvoke();
     }
 }
