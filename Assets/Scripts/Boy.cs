@@ -37,6 +37,7 @@ public class Boy : MonoBehaviour
             _powerJump = true;
             CanPowerJump = false;
             BoyHead.DestroyLog = true;
+            _audioSource.Stop();
             _audioSource.PlayOneShot(_powerJumpSoundClip);
         }
         else if (Input.GetKeyDown(KeyCode.Space) && GameManager.GameOver == false && GameManager.GameStarted == true)
@@ -44,6 +45,7 @@ public class Boy : MonoBehaviour
             _jump = true;
 
             int s = Random.Range(0, _audioClips.Length);
+            _audioSource.Stop();
             _audioSource.PlayOneShot(_audioClips[s]);
         }
     }
@@ -67,11 +69,5 @@ public class Boy : MonoBehaviour
             }
             _jump = false;
         }
-    }
-
-    void OnBecameInvisible()
-    {
-        Debug.Log("Called");
-        //GameManager.GameOverEvent.Invoke();
     }
 }
