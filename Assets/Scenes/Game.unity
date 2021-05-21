@@ -360,6 +360,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 0256d9dd1785101439b60193e4306553, type: 2}
   - {fileID: 2100000, guid: b659877ebbae19d4bb3562bbd73e3b8a, type: 2}
   - {fileID: 2100000, guid: 7e1d0748f89b8dc4b8a32465fbdb0a22, type: 2}
+  _retryButton: {fileID: 1188304049}
 --- !u!4 &91155650
 Transform:
   m_ObjectHideFlags: 0
@@ -2036,7 +2037,7 @@ GameObject:
   - component: {fileID: 1188304050}
   - component: {fileID: 1188304049}
   m_Layer: 5
-  m_Name: MainMenuButton
+  m_Name: RetryButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2701,7 +2702,7 @@ GameObject:
   - component: {fileID: 1709312781}
   - component: {fileID: 1709312780}
   m_Layer: 5
-  m_Name: Image
+  m_Name: GameOverImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

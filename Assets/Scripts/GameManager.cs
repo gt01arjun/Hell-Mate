@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using DG.Tweening;
 using System.Collections;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -44,6 +45,8 @@ public class GameManager : MonoBehaviour
     private GameObject _startText;
     [SerializeField]
     private Material[] _PlayerHitMaterials;
+    [SerializeField]
+    private Button _retryButton;
 
     private Rigidbody[] _playerRigidbodies;
 
@@ -134,6 +137,14 @@ public class GameManager : MonoBehaviour
         if (_currentScore > 250 && _logGenerator.activeSelf == false)
         {
             _logGenerator.SetActive(true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && GameOver == true)
+        {
+            Graphic graphic = _retryButton.GetComponent<Graphic>();
+            graphic.CrossFadeColor(_retryButton.colors.pressedColor, _retryButton.colors.fadeDuration, true, true);
+            _retryButton.onClick.Invoke();
+            OnMainMenu();
         }
 
 
