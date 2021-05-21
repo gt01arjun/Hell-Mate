@@ -28,10 +28,9 @@ public class Arrow : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        _rb.velocity = Vector3.zero;
-
         if (collision.transform.root.GetComponent<Boy>() && _hasHit == false)
         {
+            _rb.velocity = Vector3.zero;
             AudioSource.Play();
             FixedJoint _fixedJoint = gameObject.AddComponent<FixedJoint>();
             _fixedJoint.connectedBody = collision.transform.GetComponent<Rigidbody>();
@@ -50,7 +49,7 @@ public class Arrow : MonoBehaviour
         }
         else if (_hasHit == false)
         {
-            _rb.isKinematic = true;
+            //_rb.isKinematic = true;
         }
 
         _hasHit = true;

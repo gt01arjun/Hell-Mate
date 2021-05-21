@@ -54,7 +54,7 @@ public class Boy : MonoBehaviour
         {
             foreach (Rigidbody r in _rigidbodies)
             {
-                r.AddForce(Vector3.up * _jumpForce * 3, ForceMode.Impulse);
+                r.AddForce(Vector3.up * _jumpForce * 2, ForceMode.Impulse);
             }
             _powerJump = false;
         }

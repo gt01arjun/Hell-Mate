@@ -11,14 +11,6 @@ public class MeshDestroy : MonoBehaviour
     public int CutCascades = 1;
     public float ExplodeForce = 0;
 
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(1))
-        {
-            DestroyMesh();
-        }
-    }
-
     public void DestroyMesh()
     {
         var originalMesh = GetComponent<MeshFilter>().mesh;
@@ -262,6 +254,8 @@ public class MeshDestroy : MonoBehaviour
             GameObject.transform.position = original.transform.position;
             GameObject.transform.rotation = original.transform.rotation;
             GameObject.transform.localScale = original.transform.localScale;
+
+            GameObject.layer = 7;
 
             var mesh = new Mesh();
             mesh.name = original.GetComponent<MeshFilter>().mesh.name;
