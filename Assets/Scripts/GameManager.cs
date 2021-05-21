@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
 
     public static UnityEvent GameOverEvent = new UnityEvent();
 
+    public static UnityEvent PlayerHitEvent = new UnityEvent();
+
     [SerializeField]
     private GameObject _player;
     [SerializeField]
@@ -40,6 +42,8 @@ public class GameManager : MonoBehaviour
     private GameObject _gameLogo;
     [SerializeField]
     private GameObject _startText;
+    [SerializeField]
+    private Material[] _PlayerHitMaterials;
 
     private Rigidbody[] _playerRigidbodies;
 
@@ -52,6 +56,7 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         GameOverEvent.AddListener(GameEnd);
+        PlayerHitEvent.AddListener(PlayerHit);
         ArrowsHit = 0;
         GameOver = false;
         GameStarted = false;
@@ -164,6 +169,26 @@ public class GameManager : MonoBehaviour
 
         PlayerPrefs.SetInt("SCORE", _highestScore);
         PlayerPrefs.Save();
+    }
+
+    private void PlayerHit()
+    {
+        switch (GameManager.ArrowsHit)
+        {
+            case 1:
+                _player.transform.root.GetComponentInChildren<SkinnedMeshRenderer>().material = _PlayerHitMaterials[0];
+                break;
+
+            case 2:
+                _player.transform.root.GetComponentInChildren<SkinnedMeshRenderer>().material = _PlayerHitMaterials[1];
+                break;
+
+            case 3:
+                _player.transform.root.GetComponentInChildren<SkinnedMeshRenderer>().material = _PlayerHitMaterials[2];
+                break;
+            default:
+                break;
+        }
     }
 
     public void OnMainMenu()

@@ -32,7 +32,6 @@ public class Arrow : MonoBehaviour
 
         if (collision.transform.root.GetComponent<Boy>() && _hasHit == false)
         {
-            //Debug.Log(collision.transform.name);
             AudioSource.Play();
             FixedJoint _fixedJoint = gameObject.AddComponent<FixedJoint>();
             _fixedJoint.connectedBody = collision.transform.GetComponent<Rigidbody>();
@@ -43,6 +42,7 @@ public class Arrow : MonoBehaviour
             Destroy(_bloodEffect, 3f);
             GameManager.LastArrowDirection = ArrowVelocityX;
             GameManager.ArrowsHit++;
+            GameManager.PlayerHitEvent.Invoke();
             if (GameManager.ArrowsHit >= 3)
             {
                 GameManager.GameOverEvent.Invoke();
