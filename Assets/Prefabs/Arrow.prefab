@@ -293,6 +293,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArrowModel
       objectReference: {fileID: 0}
+    - target: {fileID: 5657902087103800570, guid: 28d7d9d70cd9e7647b9e59d2e863598b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6162080463720334639, guid: 28d7d9d70cd9e7647b9e59d2e863598b, type: 3}
       propertyPath: m_Materials.Array.size
       value: 2
