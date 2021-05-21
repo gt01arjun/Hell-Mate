@@ -62,7 +62,7 @@ public class BoyHead : MonoBehaviour
 
     private IEnumerator EnableSpawn()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1f);
         _arrowGenerator.SetActive(true);
     }
 }
