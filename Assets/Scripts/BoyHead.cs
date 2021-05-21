@@ -28,6 +28,16 @@ public class BoyHead : MonoBehaviour
             _arrowGenerator.SetActive(false);
             DestroyLog = false;
 
+            var foundArrows = FindObjectsOfType<Arrow>();
+
+            foreach (var item in foundArrows)
+            {
+                if (item.AttachedToPlayer == false)
+                {
+                    Destroy(item.transform.root.gameObject);
+                }
+            }
+
             StartCoroutine("EnableSpawn");
         }
     }

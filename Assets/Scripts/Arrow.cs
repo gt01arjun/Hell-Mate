@@ -12,10 +12,13 @@ public class Arrow : MonoBehaviour
 
     public GameObject BloodEffect;
 
+    public bool AttachedToPlayer;
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _rb.velocity = new Vector3(ArrowVelocityX, 0, 0);
+        AttachedToPlayer = false;
     }
 
     private void Update()
@@ -30,6 +33,7 @@ public class Arrow : MonoBehaviour
     {
         if (collision.transform.root.GetComponent<Boy>() && _hasHit == false)
         {
+            AttachedToPlayer = true;
             _rb.velocity = Vector3.zero;
             AudioSource.Play();
             FixedJoint _fixedJoint = gameObject.AddComponent<FixedJoint>();
