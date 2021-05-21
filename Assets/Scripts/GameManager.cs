@@ -134,7 +134,7 @@ public class GameManager : MonoBehaviour
             _highScoreText.text = $"HIGH SCORE: {_highestScore}";
         }
 
-        if (_currentScore > 250 && _logGenerator.activeSelf == false)
+        if (_currentScore > 150 && _logGenerator.activeSelf == false)
         {
             _logGenerator.SetActive(true);
         }
