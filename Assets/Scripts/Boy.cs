@@ -3,37 +3,71 @@ using UnityEngine;
 public class Boy : MonoBehaviour
 {
     [SerializeField]
-    private float _thrust;
+    private float _jumpForce;
 
     [SerializeField]
-    private float _thrustMultiplier;
+    private float _playerMaxVelocity;
 
     [SerializeField]
-    private Rigidbody _rb;
+    private AudioClip[] _audioClips;
 
-    private float _startTime;
+    [SerializeField]
+    private AudioClip _powerJumpSoundClip;
+
+    private bool _jump = false;
+    private bool _powerJump = false;
+
+    private Rigidbody[] _rigidbodies;
+
+    private AudioSource _audioSource;
+
+    public static bool CanPowerJump;
+
+    private void Start()
+    {
+        _rigidbodies = GetComponentsInChildren<Rigidbody>();
+
+        _audioSource = GetComponent<AudioSource>();
+    }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && GameManager.GameOver == false && GameManager.GameStarted == true && CanPowerJump)
         {
-            // key pressed: save the current time
-            _startTime = Time.time;
+            _powerJump = true;
+            CanPowerJump = false;
+            BoyHead.DestroyLog = true;
+            _audioSource.Stop();
+            _audioSource.PlayOneShot(_powerJumpSoundClip);
         }
-
-        if (Input.GetKeyUp(KeyCode.Space))
+        else if (Input.GetKeyDown(KeyCode.Space) && GameManager.GameOver == false && GameManager.GameStarted == true)
         {
-            // key released: measure the time
-            float timePressed = Time.time - _startTime;
+            _jump = true;
 
-            if (timePressed > 0.3f)
+            int s = Random.Range(0, _audioClips.Length);
+            _audioSource.Stop();
+            _audioSource.PlayOneShot(_audioClips[s]);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (_powerJump == true)
+        {
+            foreach (Rigidbody r in _rigidbodies)
             {
-                _rb.velocity = new Vector3(0, _thrust * _thrustMultiplier, 0);
+                r.AddForce(Vector3.up * _jumpForce * 1.5f, ForceMode.Impulse);
             }
-            else
+            _powerJump = false;
+        }
+        else if (_jump == true)
+        {
+            foreach (Rigidbody r in _rigidbodies)
             {
-                _rb.velocity = new Vector3(0, _thrust, 0);
+                r.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
+                r.velocity = Vector3.ClampMagnitude(r.velocity, _playerMaxVelocity);
             }
+            _jump = false;
         }
     }
 }

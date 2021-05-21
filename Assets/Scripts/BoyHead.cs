@@ -1,13 +1,68 @@
+using System.Collections;
 using UnityEngine;
 
 public class BoyHead : MonoBehaviour
 {
-    private void OnCollisionEnter(Collision collision)
+    public static bool DestroyLog = false;
+
+    private GameObject _log;
+
+    private AudioSource _audioSource;
+
+    [SerializeField]
+    private GameObject _arrowGenerator;
+
+    private void Start()
     {
-        if (collision.gameObject.GetComponent<MeshDestroy>())
+        _audioSource = GetComponent<AudioSource>();
+    }
+
+    private void Update()
+    {
+        if (DestroyLog == true)
         {
-            Debug.Log(collision.gameObject.name);
-            collision.gameObject.GetComponent<MeshDestroy>().DestroyMesh();
+            _log.GetComponent<MeshDestroy>().DestroyMesh();
+            _audioSource.Stop();
+            _audioSource.Play();
+            _arrowGenerator.GetComponent<ArrowGenerator>().StopSpawn();
+            _arrowGenerator.SetActive(false);
+            DestroyLog = false;
+
+            var foundArrows = FindObjectsOfType<Arrow>();
+
+            foreach (var item in foundArrows)
+            {
+                if (item.AttachedToPlayer == false)
+                {
+                    Destroy(item.transform.root.gameObject);
+                }
+            }
+
+            StartCoroutine("EnableSpawn");
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponent<PowerJump>())
+        {
+            Boy.CanPowerJump = true;
+            _log = other.gameObject.transform.root.gameObject;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.GetComponent<PowerJump>())
+        {
+            Boy.CanPowerJump = false;
+            _log = null;
+        }
+    }
+
+    private IEnumerator EnableSpawn()
+    {
+        yield return new WaitForSeconds(1f);
+        _arrowGenerator.SetActive(true);
     }
 }

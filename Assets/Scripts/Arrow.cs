@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Arrow : MonoBehaviour
@@ -7,39 +6,56 @@ public class Arrow : MonoBehaviour
 
     private bool _hasHit;
 
-    [SerializeField]
-    private Vector2 _direction;
+    public float ArrowVelocityX;
 
-    [SerializeField]
-    private float _launchForce;
+    public AudioSource AudioSource;
+
+    public GameObject BloodEffect;
+
+    public bool AttachedToPlayer;
 
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
-        _rb.AddForce(_direction * _launchForce);
+        _rb.velocity = new Vector3(ArrowVelocityX, 0, 0);
+        AttachedToPlayer = false;
     }
 
     private void Update()
     {
-        if (_hasHit == false)
+        if (transform.position.x > 16f || transform.position.x < -5f)
         {
-            TrackMovement();
+            Destroy(gameObject);
         }
-    }
-
-    private void TrackMovement()
-    {
-        Vector2 direction = _rb.velocity;
-
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.transform.root.GetComponent<Boy>() && _hasHit == false)
+        {
+            AttachedToPlayer = true;
+            _rb.velocity = Vector3.zero;
+            AudioSource.Play();
+            FixedJoint _fixedJoint = gameObject.AddComponent<FixedJoint>();
+            _fixedJoint.connectedBody = collision.transform.GetComponent<Rigidbody>();
+            _rb.useGravity = false;
+            _rb.constraints = RigidbodyConstraints.FreezeRotation;
+            Destroy(gameObject.GetComponent<Collider>());
+            GameObject _bloodEffect = Instantiate(BloodEffect, collision.contacts[0].point, Quaternion.identity);
+            Destroy(_bloodEffect, 3f);
+            GameManager.LastArrowDirection = ArrowVelocityX;
+            GameManager.ArrowsHit++;
+            GameManager.PlayerHitEvent.Invoke();
+            if (GameManager.ArrowsHit >= 3)
+            {
+                GameManager.GameOverEvent.Invoke();
+            }
+        }
+        else if (_hasHit == false)
+        {
+            //_rb.isKinematic = true;
+        }
+
         _hasHit = true;
-        _rb.velocity = Vector3.zero;
-        //_rb.isKinematic = true;
     }
 }
