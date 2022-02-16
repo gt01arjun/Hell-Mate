@@ -4,34 +4,9 @@ using PlayFab.ClientModels;
 using System.Collections.Generic;
 using PlayFab.Utils;
 
-public class PlayFabLeaderboardController : MonoBehaviour
+public static class PlayFabLeaderboardController
 {
-    private int _clicks;
-    private bool _minTimeSent;
-
-
-    private void Start()
-    {
-        _clicks = 0;
-    }
-
-    private void OnDisable()
-    {
-    }
-
-
-    public void ButtonClick()
-    {
-        if (++_clicks >= 15 && _minTimeSent == false)
-        {
-
-            _minTimeSent = true;
-        }
-    }
-
-
-
-    private void SendLeaderboardStat(string leaderboardName, int val)
+    public static void SendLeaderboardStat(string leaderboardName, int val)
     {
         var request = new UpdatePlayerStatisticsRequest
         {
@@ -46,13 +21,13 @@ public class PlayFabLeaderboardController : MonoBehaviour
         };
         PlayFabClientAPI.UpdatePlayerStatistics(request, OnLeaderboardUpdate, PlayFabUtils.OnError);
     }
-    private void OnLeaderboardUpdate(UpdatePlayerStatisticsResult result)
+    private static  void OnLeaderboardUpdate(UpdatePlayerStatisticsResult result)
     {
         Debug.Log($"Successfully updated leaderboard :: [{result.Request.ToJson().GetFromJSON("StatisticName")}]");
     }
 
 
-    private void GetLeaderboardAroundPlayer(string leaderboardName)
+    public static void GetLeaderboardAroundPlayer(string leaderboardName)
     {
         var request = new GetLeaderboardAroundPlayerRequest
         {
@@ -61,14 +36,14 @@ public class PlayFabLeaderboardController : MonoBehaviour
         };
         PlayFabClientAPI.GetLeaderboardAroundPlayer(request, OnLeaderboardAroundPlayerGet, PlayFabUtils.OnError);
     }
-    private void OnLeaderboardAroundPlayerGet(GetLeaderboardAroundPlayerResult result)
+    private static void OnLeaderboardAroundPlayerGet(GetLeaderboardAroundPlayerResult result)
     {
         string statName = result.Request.ToJson().GetFromJSON("StatisticName");
         string str = $"Around Player *** {statName} ***\n";
         PrintLeaderboard(result.Leaderboard, str);
     }
 
-    private void GetLeaderboard(string leaderboardName)
+    public static void GetLeaderboard(string leaderboardName)
     {
         var request = new GetLeaderboardRequest
         {
@@ -78,13 +53,13 @@ public class PlayFabLeaderboardController : MonoBehaviour
         };
         PlayFabClientAPI.GetLeaderboard(request, OnLeaderboardGet, PlayFabUtils.OnError);
     }
-    private void OnLeaderboardGet(GetLeaderboardResult result)
+    private static void OnLeaderboardGet(GetLeaderboardResult result)
     {
         string statName = result.Request.ToJson().GetFromJSON("StatisticName");
         PrintLeaderboard(result.Leaderboard, statName);
     }
 
-    private void PrintLeaderboard(List<PlayerLeaderboardEntry> entries, string statName)
+    private static void PrintLeaderboard(List<PlayerLeaderboardEntry> entries, string statName)
     {
         string str = $"*** {statName} ***\n";
         foreach (var item in entries)

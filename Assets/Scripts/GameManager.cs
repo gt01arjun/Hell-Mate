@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using DG.Tweening;
 using System.Collections;
+using PlayFab.Utils;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -184,6 +185,8 @@ public class GameManager : MonoBehaviour
 
         PlayerPrefs.SetInt("SCORE", _highestScore);
         PlayerPrefs.Save();
+
+        PlayFabLeaderboardController.SendLeaderboardStat(PlayFabLeaderboards.HIGHEST_SCORE,_highestScore);
     }
 
     private void PlayerHit()
