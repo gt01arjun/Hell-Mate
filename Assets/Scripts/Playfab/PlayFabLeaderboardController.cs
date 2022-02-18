@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using PlayFab;
 using PlayFab.ClientModels;
@@ -43,6 +44,7 @@ public static class PlayFabLeaderboardController
         PrintLeaderboard(result.Leaderboard, str);
     }
 
+    public static Action<GetLeaderboardResult,string> GetHighScoreLeaderboardData;
     public static void GetLeaderboard(string leaderboardName)
     {
         var request = new GetLeaderboardRequest
@@ -51,12 +53,13 @@ public static class PlayFabLeaderboardController
             StartPosition = 0,
             MaxResultsCount = 10
         };
-        PlayFabClientAPI.GetLeaderboard(request, OnLeaderboardGet, PlayFabUtils.OnError);
+        PlayFabClientAPI.GetLeaderboard(request,OnLeaderboardGet , PlayFabUtils.OnError);
     }
     private static void OnLeaderboardGet(GetLeaderboardResult result)
     {
         string statName = result.Request.ToJson().GetFromJSON("StatisticName");
-        PrintLeaderboard(result.Leaderboard, statName);
+        // PrintLeaderboard(result.Leaderboard, statName);
+        GetHighScoreLeaderboardData.Invoke(result,statName);
     }
 
     private static void PrintLeaderboard(List<PlayerLeaderboardEntry> entries, string statName)
