@@ -44,24 +44,29 @@ public static class PlayFabLeaderboardController
         PrintLeaderboard(result.Leaderboard, str);
     }
 
-    public static Action<GetLeaderboardResult,string> GetHighScoreLeaderboardData;
-    public static void GetLeaderboard(string leaderboardName)
+    public static void GetLeaderboard(string leaderboardName, Action<GetLeaderboardResult> OnLeaderboardGet)
     {
         var request = new GetLeaderboardRequest
         {
             StatisticName = leaderboardName,
             StartPosition = 0,
-            MaxResultsCount = 10
+            MaxResultsCount = 10,
         };
         PlayFabClientAPI.GetLeaderboard(request,OnLeaderboardGet , PlayFabUtils.OnError);
     }
-    private static void OnLeaderboardGet(GetLeaderboardResult result)
+    
+    public static void GetLeaderboardByVersion(string leaderboardName,int version, Action<GetLeaderboardResult> OnLeaderboardGet)
     {
-        string statName = result.Request.ToJson().GetFromJSON("StatisticName");
-        // PrintLeaderboard(result.Leaderboard, statName);
-        GetHighScoreLeaderboardData.Invoke(result,statName);
+        var request = new GetLeaderboardRequest
+        {
+            StatisticName = leaderboardName,
+            StartPosition = 0,
+            MaxResultsCount = 10,
+            Version = version,
+        };
+        PlayFabClientAPI.GetLeaderboard(request,OnLeaderboardGet , PlayFabUtils.OnError);
     }
-
+    
     private static void PrintLeaderboard(List<PlayerLeaderboardEntry> entries, string statName)
     {
         string str = $"*** {statName} ***\n";

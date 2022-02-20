@@ -19,6 +19,14 @@ public class ArrowGenerator : MonoBehaviour
 
     [SerializeField]
     private float _arrowSpawnRate;
+    public float ArrowSpawnRate
+    {
+        get => _arrowSpawnRate;
+        set
+        {
+            if (value > 0.2) _arrowSpawnRate = value;
+        }
+    }
 
     [SerializeField]
     private int _arrowSpawnDistance;
@@ -28,7 +36,7 @@ public class ArrowGenerator : MonoBehaviour
 
     private void OnEnable()
     {
-        InvokeRepeating("SpawnArrow", 1f, _arrowSpawnRate);
+        InvokeRepeating("SpawnArrow", 1f, ArrowSpawnRate);
     }
 
     private void SpawnArrow()

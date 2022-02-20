@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using PlayFab;
 using PlayFab.ClientModels;
+using PlayFab.Utils;
 using UnityEngine.Events;
 
 public class PlayfabLoginRegisterController : MonoBehaviour
@@ -104,10 +105,17 @@ public class PlayfabLoginRegisterController : MonoBehaviour
             _messageText.color = Color.white;
             _onLogin.Invoke();
             gameObject.SetActive(false);
+            SavePlayerInfo(result);
         }
 
     }
 
+    private void SavePlayerInfo(LoginResult result)
+    {
+        PlayFabPlayerInfo.PlayFabID = result.PlayFabId;
+        Debug.Log($"PlayFabID : {result.PlayFabId}");
+    }
+        
     public void ResetPasswordButton()
     {
         var email = _loginPanel.activeInHierarchy ? _email_login.text : _email_register.text;
