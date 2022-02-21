@@ -2,7 +2,7 @@
 ## Leader Boards
 * ### LeaderBoard 1 :
   * Shows the player with the highest score.
-  * Manual Rest set.
+  * Manual Reset.
 
 * ### LeaderBoard 2 : 
   * Shows the Player with the highest playtime.
