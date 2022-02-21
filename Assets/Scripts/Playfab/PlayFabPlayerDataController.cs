@@ -7,7 +7,7 @@ using PlayFab.Utils;
 
 public static class PlayFabPlayerDataController
 {
-    public static void PushPlayerData(string playerData, string dataToPush)
+    public static void PushPlayerData(string playerData, string dataToPush,bool isPublisher = false)
     {
         var request = new UpdateUserDataRequest
         {
@@ -17,17 +17,24 @@ public static class PlayFabPlayerDataController
             },
             
         };
-        PlayFabClientAPI.UpdateUserData(request, OnUserDataPushed, PlayFabUtils.OnError);
+        if(isPublisher) PlayFabClientAPI.UpdateUserPublisherData(request,OnUserDataPushed,PlayFabUtils.OnError);
+        else PlayFabClientAPI.UpdateUserData(request, OnUserDataPushed, PlayFabUtils.OnError);
     }
     private static void OnUserDataPushed(UpdateUserDataResult obj)
     {
         Debug.Log($"Pushed user Data");
     }
     
-    public static void PullPlayerData(Action<GetUserDataResult> OnUserDataPulled)
+    public static void PullPlayerData(Action<GetUserDataResult> OnUserDataPulled,bool isPublisher = false)
     {
         var request = new GetUserDataRequest();
         PlayFabClientAPI.GetUserData(request, OnUserDataPulled, PlayFabUtils.OnError);
+    }
+
+    public static void GetPlayerAccountInfo(Action<GetAccountInfoResult> OnUserDataPulled)
+    {
+        var request = new GetAccountInfoRequest();
+        PlayFabClientAPI.GetAccountInfo(request,OnUserDataPulled,PlayFabUtils.OnError);
     }
     // private static void OnUserDataPulled(GetUserDataResult result)
     // {

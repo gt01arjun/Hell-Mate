@@ -29,6 +29,7 @@ namespace PlayFab.Utils
     {
         public static readonly string HIGH_SCORE = "High_Score";
         public static string DAILY_BOARD_VER = "Daily_Board_Ver";
+        public static string DISPLAY_NAME = "Display_Name";
     }
 
     [Serializable]
@@ -49,6 +50,7 @@ namespace PlayFab.Utils
     public static class PlayFabPlayerInfo
     {
         public static string PlayFabID;
+        public static string DisplayName;
     }
     
     public static class PlayFabUtils

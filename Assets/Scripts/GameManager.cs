@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
     private int _currentScore;
     private int _highestScore;
     private float _gameStartTime;
-    private int _dailyBoardVersion = -1;
+    private int _dailyBoardVersion = 0;
 
     private void OnEnable()
     {
@@ -236,13 +236,14 @@ public class GameManager : MonoBehaviour
 
         PlayFabLeaderboardController.GetLeaderboardByVersion(PlayFabLeaderboards.DAILY_TIME, _dailyBoardVersion, OnGetVersionedBoard);
         _dailyBoardVersion = version;
+        PlayFabPlayerDataController.PushPlayerData(PlayFabPlayerData.DAILY_BOARD_VER,_dailyBoardVersion.ToString());
     }
 
     private void OnGetVersionedBoard(GetLeaderboardResult result)
     {
-        //TODO: Give top player a reward.
-        // if (result.Leaderboard[0].PlayFabId == PlayFabPlayerInfo.PlayFabID)
-        // {
-        // }
+        if (result.Leaderboard[0].PlayFabId == PlayFabPlayerInfo.PlayFabID)
+        {
+            PlayFabPlayerDataController.PushPlayerData("TOKEN","Token",true);
+        }
     }
 }
